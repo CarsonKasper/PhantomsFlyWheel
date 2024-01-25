@@ -1,32 +1,33 @@
 #include "main.h"
-
+pros :: Motor Arm(10, true);
+pros :: Motor FlyWheel(2, false);
 
 // Chassis constructor
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-15, -16}
+  {-14, -11, -15 }
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{6, 5}
+  ,{6, 9, 8}
 
   // IMU Port
-  ,20
+  ,1
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
-  ,2.5
+  ,4.125
 
   // Cartridge RPM
   //   (or tick per rotation if using tracking wheels)
-  ,1200
+  ,600
 
   // External Gear Ratio (MUST BE DECIMAL)
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,2
+  ,0.57142857142
 
 
   // Uncomment if using tracking wheels
@@ -45,7 +46,45 @@ Drive chassis (
   // ,1
 );
 
+void Arm_Control() {
+  while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R1))
+    {
+      Arm.move(127);
+    }
+  while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R2))
+    {
+      Arm.move(-127);
+    }
+      Arm.brake();
+}
 
+void BangBangLoop(int BangInputRPM = 390) {
+  if (FlyWheel.get_actual_velocity() > BangInputRPM)
+    {
+      FlyWheel.move_voltage(5000);
+    }
+  else
+    {
+      FlyWheel.move_voltage(12000);
+    }
+  pros :: delay(5);
+}
+
+void FlyWheel_Control(int i = 1) {
+  pros :: delay(500);
+  if (master.get_digital(pros :: E_CONTROLLER_DIGITAL_L1)) {
+    if (i == 1) {
+      i = 0;
+    } else {
+      i = 1;
+    }
+  }
+  if (i = 1) {
+    BangBangLoop();
+  } else {
+    FlyWheel.brake();
+  }
+}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -151,18 +190,17 @@ void autonomous() {
 void opcontrol() {
   // This is preference to what you like to drive on.
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-
+  Arm.set_brake_mode(MOTOR_BRAKE_HOLD);
+  FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
+  pros :: Task Control_Arm(Arm_Control);
+  pros :: Task Control_FlyWheel(FlyWheel_Control);
   while (true) {
 
-    chassis.tank(); // Tank control
-    // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
+    //chassis.tank(); // Tank control
+    chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade
     // chassis.arcade_flipped(ez::SINGLE); // Flipped single arcade
-
-    // . . .
-    // Put more user control code here!
-    // . . .
 
     pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
