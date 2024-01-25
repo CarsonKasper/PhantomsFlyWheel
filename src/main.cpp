@@ -1,12 +1,13 @@
 #include "main.h"
-pros :: Motor Arm(10, true);
-pros :: Motor FlyWheel(2, false);
+
+pros::Motor Arm(10, true);
+pros::Motor FlyWheel(2, false);
 
 // Chassis constructor
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-14, -11, -15 }
+  {-14, -11, -15}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
@@ -72,7 +73,7 @@ void BangBangLoop(int BangInputRPM = 390) {
 
 void FlyWheel_Control(int i = 1) {
   while (true) {
-    pros :: delay(500);
+    pros::delay(500);
     if (master.get_digital(pros :: E_CONTROLLER_DIGITAL_L1)) {
       if (i == 1) {
         i = 0;
@@ -194,8 +195,8 @@ void opcontrol() {
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
   Arm.set_brake_mode(MOTOR_BRAKE_HOLD);
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
-  pros :: Task Control_Arm(Arm_Control);
-  pros :: Task Control_FlyWheel(FlyWheel_Control);
+  pros::Task Control_Arm(Arm_Control);
+  pros::Task Control_FlyWheel(FlyWheel_Control);
   while (true) {
 
     //chassis.tank(); // Tank control
