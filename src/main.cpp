@@ -47,15 +47,15 @@ Drive chassis (
 );
 
 void Arm_Control() {
-  while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R1))
-    {
+  while (true) {
+    while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R1)) {
       Arm.move(127);
     }
-  while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R2))
-    {
+    while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R2)) {
       Arm.move(-127);
     }
-      Arm.brake();
+    Arm.brake();
+  }
 }
 
 void BangBangLoop(int BangInputRPM = 390) {
@@ -71,18 +71,20 @@ void BangBangLoop(int BangInputRPM = 390) {
 }
 
 void FlyWheel_Control(int i = 1) {
-  pros :: delay(500);
-  if (master.get_digital(pros :: E_CONTROLLER_DIGITAL_L1)) {
-    if (i == 1) {
-      i = 0;
-    } else {
-      i = 1;
+  while (true) {
+    pros :: delay(500);
+    if (master.get_digital(pros :: E_CONTROLLER_DIGITAL_L1)) {
+      if (i == 1) {
+        i = 0;
+      } else {
+        i = 1;
+      }
     }
-  }
-  if (i = 1) {
-    BangBangLoop();
-  } else {
-    FlyWheel.brake();
+    if (i = 1) {
+      BangBangLoop();
+    } else {
+      FlyWheel.brake();
+    }  
   }
 }
 
