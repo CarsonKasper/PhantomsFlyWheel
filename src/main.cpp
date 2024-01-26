@@ -60,7 +60,8 @@ void Arm_Control() {
   }
 }
 
-void BangBangLoop(int BangInputRPM = 390) {
+void BangBangLoop() {
+  int BangInputRPM = 550;
   if (FlyWheel.get_actual_velocity() > BangInputRPM)
     {
       FlyWheel.move_voltage(5000);
