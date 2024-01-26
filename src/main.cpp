@@ -1,7 +1,7 @@
 #include "main.h"
 
-pros::Motor Arm(10, true);
-pros::Motor FlyWheel(2, false);
+  pros::Motor Arm(10);
+  pros::Motor FlyWheel(2);
 
 // Chassis constructor
 Drive chassis (
@@ -11,7 +11,7 @@ Drive chassis (
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{6, 9, 8}
+  ,{5, 9, 8}
 
   // IMU Port
   ,1
@@ -49,11 +49,12 @@ Drive chassis (
 
 void Arm_Control() {
   while (true) {
-    while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R1)) {
+    pros::delay(10);
+    while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
       Arm.move(127);
     }
-    while (master.get_digital(pros :: E_CONTROLLER_DIGITAL_R2)) {
-      Arm.move(-127);
+    while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+      Arm.move(-80);
     }
     Arm.brake();
   }
@@ -68,20 +69,21 @@ void BangBangLoop(int BangInputRPM = 390) {
     {
       FlyWheel.move_voltage(12000);
     }
-  pros :: delay(5);
+  pros::delay(5);
 }
 
-void FlyWheel_Control(int i = 1) {
+void FlyWheel_Control() {
+  int i = 1;
   while (true) {
-    pros::delay(500);
-    if (master.get_digital(pros :: E_CONTROLLER_DIGITAL_L1)) {
+    pros::delay(300);
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
       if (i == 1) {
         i = 0;
       } else {
         i = 1;
       }
     }
-    if (i = 1) {
+    if (i == 1) {
       BangBangLoop();
     } else {
       FlyWheel.brake();
@@ -102,7 +104,7 @@ void initialize() {
   pros::delay(500); // Stop the user from doing anything while legacy ports configure.
 
   // Configure your chassis controls
-  chassis.toggle_modify_curve_with_controller(true); // Enables modifying the controller curve with buttons on the joysticks
+ // chassis.toggle_modify_curve_with_controller(true); // Enables modifying the controller curve with buttons on the joysticks
   chassis.set_active_brake(0); // Sets the active brake kP. We recommend 0.1.
   chassis.set_curve_default(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)  
   default_constants(); // Set the drive to your own constants from autons.cpp!
@@ -193,7 +195,7 @@ void autonomous() {
 void opcontrol() {
   // This is preference to what you like to drive on.
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-  Arm.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Arm.set_brake_mode(MOTOR_BRAKE_HOLD); 
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
   pros::Task Control_Arm(Arm_Control);
   pros::Task Control_FlyWheel(FlyWheel_Control);
