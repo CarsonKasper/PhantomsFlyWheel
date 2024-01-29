@@ -1,7 +1,5 @@
 #include "main.h"
-
-  pros::Motor Arm(10);
-  pros::Motor FlyWheel(2);
+#include "motors.h"
 
 Drive chassis ({-14, -11, -15}, {5, 9, 8}, 1, 4.125, 600, 0.57142857142);
 
