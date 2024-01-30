@@ -111,6 +111,7 @@ void opcontrol() {
   pros::Task PTO_Actuate(ActuatePTO);
   while (true) {
     chassis.arcade_standard(ez::SPLIT);
+    PTOPiston.set_value(true);
 
     pros::delay(ez::util::DELAY_TIME);
   }
