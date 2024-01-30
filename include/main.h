@@ -61,7 +61,7 @@ using namespace pros;
 
 extern Motor Arm;
 extern Motor FlyWheel;
-extern ADIDigitalOut; 
+extern ADIDigitalOut PTOPiston; 
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
