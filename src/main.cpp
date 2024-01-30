@@ -20,17 +20,17 @@ void Arm_Control() {
 }
 
 void ActuatePTO () {
-  int check = 1:
+  int check = 1;
   while (true) {
-    pros::delay(10):
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+    pros::delay(10);
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
       if (check == 1) {
         PTOPiston.set_value(true);
-        check = 0
+        check = 0;
       }
       if (check == 0) {
         PTOPiston.set_value(false);
-        check = 1
+        check = 1;
       }
     }      
   }
