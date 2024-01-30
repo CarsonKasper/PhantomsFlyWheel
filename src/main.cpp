@@ -108,6 +108,7 @@ void opcontrol() {
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
   pros::Task Control_Arm(Arm_Control);
   pros::Task Control_FlyWheel(FlyWheel_Control);
+  pros::Task PTO_Actuate(ActuatePTO);
   while (true) {
     chassis.arcade_standard(ez::SPLIT);
 
