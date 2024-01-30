@@ -2,6 +2,7 @@
 
 pros::Motor Arm(10);
 pros::Motor FlyWheel(2);
+pros::ADIDigitalOut PTOPiston('A');
 
 Drive chassis ({-14, -11, -15}, {5, 9, 8}, 1, 4.125, 600, 0.57142857142);
 
@@ -15,6 +16,23 @@ void Arm_Control() {
       Arm.move(-80);
     }
     Arm.brake();
+  }
+}
+
+void ActuatePTO () {
+  int check = 1:
+  while (true) {
+    pros::delay(10):
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+      if (check == 1) {
+        PTOPiston.set_value(true);
+        check = 0
+      }
+      if (check == 0) {
+        PTOPiston.set_value(false);
+        check = 1
+      }
+    }      
   }
 }
 
