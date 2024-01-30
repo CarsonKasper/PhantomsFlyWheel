@@ -22,7 +22,7 @@ void Arm_Control() {
 void ActuatePTO () {
   int check = 1;
   while (true) {
-    pros::delay(10);
+    pros::delay(300);
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
       if (check == 1) {
         PTOPiston.set_value(true);
