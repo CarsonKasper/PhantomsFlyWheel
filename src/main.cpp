@@ -25,11 +25,10 @@ void ActuatePTO () {
     pros::delay(10);
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
       if (check == 1) {
-        PTOPiston.set_value(false);
-        check = 0;
-      }
-      if (check == 0) {
         PTOPiston.set_value(true);
+        check = 0;
+      } else (check == 0) {
+        PTOPiston.set_value(false);
         check = 1;
       }
     }      
