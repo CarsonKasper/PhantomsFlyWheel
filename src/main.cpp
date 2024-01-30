@@ -27,7 +27,7 @@ void ActuatePTO () {
       if (check == 1) {
         PTOPiston.set_value(true);
         check = 0;
-      } else (check == 0) {
+      } else {
         PTOPiston.set_value(false);
         check = 1;
       }
