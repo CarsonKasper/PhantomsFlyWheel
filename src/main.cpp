@@ -22,7 +22,7 @@ void Arm_Control() {
 void ActuatePTO () {
   int check = 1;
   while (true) {
-    pros::delay(400);
+    pros::delay(200);
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
       if (check == 1) {
         PTOPiston.set_value(true);
@@ -51,7 +51,7 @@ void BangBangLoop() {
 void FlyWheel_Control() {
   int i = 1;
   while (true) {
-    pros::delay(400);
+    pros::delay(200);
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
       if (i == 1) {
         i = 0;
