@@ -1,10 +1,10 @@
 #include "main.h"
-"griffin is stupid"
+//"griffin is stupid"
 pros::Motor Arm(10);
 pros::Motor FlyWheel(2);
 pros::ADIDigitalOut PTOPiston('A');
 
-Drive chassis ({-14, -11, -15}, {5, 9, 8}, 1, 4.125, 600, 0.57142857142);
+Drive chassis ({-14, -11, -15}, {16/*was 5*/, 13/*was 5*/, 8}, 1, 4.125, 600, 0.57142857142);
 
 int endgame = 0;
 
@@ -108,8 +108,8 @@ void competition_initialize() {
 }
 
 void autonomous() {
-  pros::Task BangBangTask(BangBangLoop);
-  pros::delay(50000);
+ // pros::Task BangBangTask(BangBangLoop);
+
   chassis.reset_pid_targets(); 
   chassis.reset_gyro(); 
   chassis.reset_drive_sensor(); 
@@ -118,6 +118,7 @@ void autonomous() {
 }
 
 void opcontrol() {
+  autonomous();
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
   Arm.set_brake_mode(MOTOR_BRAKE_HOLD); 
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
