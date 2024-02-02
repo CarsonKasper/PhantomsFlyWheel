@@ -1,19 +1,31 @@
 #include "main.h"
-
+"griffin is stupid"
 pros::Motor Arm(10);
 pros::Motor FlyWheel(2);
 pros::ADIDigitalOut PTOPiston('A');
 
 Drive chassis ({-14, -11, -15}, {5, 9, 8}, 1, 4.125, 600, 0.57142857142);
 
+int endgame = 0;
+
 void Arm_Control() {
   while (true) {
     pros::delay(10);
+    if (endgame == 0) {
     while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
       Arm.move(127);
     }
     while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       Arm.move(-80);
+    }
+    } 
+    else {
+      while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+      Arm.move(127);
+    }
+    while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+      Arm.move(-127);
+    }
     }
     Arm.brake();
   }
@@ -27,9 +39,11 @@ void ActuatePTO () {
       if (check == 1) {
         PTOPiston.set_value(true);
         check = 0;
+        endgame = 1;
       } else {
         PTOPiston.set_value(false);
         check = 1;
+        endgame = 0;
       }
     }      
   }
@@ -94,6 +108,8 @@ void competition_initialize() {
 }
 
 void autonomous() {
+  pros::Task BangBangTask(BangBangLoop);
+  pros::delay(50000);
   chassis.reset_pid_targets(); 
   chassis.reset_gyro(); 
   chassis.reset_drive_sensor(); 
@@ -112,5 +128,6 @@ void opcontrol() {
     chassis.arcade_standard(ez::SPLIT);
 
     pros::delay(ez::util::DELAY_TIME);
+
   }
 }
