@@ -20,7 +20,7 @@ void Arm_Control() {
       Arm.move(-127);
       pros::delay(1000);
       PTOPiston.set_value(true);
-      chassis.set_tank(-127, -127);
+      chassis.set_tank(127, 127);
       delay(1000);
       chassis.set_tank(0,0);
       Arm.brake();
