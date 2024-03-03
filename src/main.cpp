@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 pros::Motor Arm(4);
 pros::Motor FlyWheel(20);
 pros::ADIDigitalOut PTOPiston('C');
@@ -28,8 +27,8 @@ void Arm_Control() {
       pros::delay(100);
       chassis.set_tank(-127,-127);
       pros::delay(500);
-      chassis.break();
-      Arm.break();
+      chassis.set_tank(0,0);
+      Arm.brake();
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
       chassis.set_drive_brake(MOTOR_BRAKE_COAST);
@@ -140,6 +139,7 @@ void competition_initialize() {
 }
 
 void autonomous() {
+  Near_Auton();
   chassis.reset_pid_targets(); 
   chassis.reset_gyro(); 
   chassis.reset_drive_sensor(); 
@@ -148,7 +148,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-  autonomous();
+  // autonomous();
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
   Arm.set_brake_mode(MOTOR_BRAKE_HOLD); 
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);

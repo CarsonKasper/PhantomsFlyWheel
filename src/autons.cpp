@@ -58,12 +58,13 @@ void tug (int attempts) {
 }
 
 void Near_Auton(){
-  chassis.set_drive_pid(105, DRIVE_SPEED);
-  chassis.wait_drive();
-  chassis.set_drive_pid(-50, DRIVE_SPEED);
+  // chassis.set_drive_pid(100, 110);
+   chassis.set_tank(127, 127);
+  // chassis.wait_drive();
+  pros::delay(5000);
   //pros::delay(2000);
 }
-
+ 
 void Far_Auton(){
   //chassis.set_drive_pid();
   pros::delay(4000);
