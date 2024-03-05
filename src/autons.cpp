@@ -42,7 +42,7 @@ void Near_Auton(){
 }
  
 void Far_Auton(){
-  chassis.pid_turn_set(90, 110, false)
+  chassis.pid_turn_set(90, 110, false);
   //chassis.set_drive_pid();
 }
 
