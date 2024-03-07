@@ -6,7 +6,7 @@ pros::ADIDigitalOut PTOPiston('C');
 pros::ADIDigitalOut LeftWing('A');
 pros::ADIDigitalOut RightWing('B');
 
-Drive chassis ({-5, -10, -9}, {6, 7, 8}, 11, 4.125, 600, 1.75);
+Drive chassis ({-5, -10, -9}, {6, 7, 8}, 11, 4.125, 600, /*0.57142857142 */1.75);
 
 void Arm_Control() {
   while (true) {
@@ -20,14 +20,14 @@ void Arm_Control() {
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
       chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
-      chassis.drive_set(30,30);
+      chassis.drive_set(30, 30);
       pros::delay(200);
       PTOPiston.set_value(true);
       Arm.move(-127);
       pros::delay(100);
-      chassis.drive_set(-127,-127);
+      chassis.drive_set(-127, -127);
       pros::delay(500);
-      chassis.drive_set(0,0);
+      chassis.drive_set(0, 0);
       Arm.brake();
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
@@ -109,9 +109,10 @@ void Wing_Control() {
 
 void initialize() {
   pros::delay(500);
-
+  chassis.drive_imu_reset(); 
+  chassis.drive_sensor_reset();
   chassis.opcontrol_curve_buttons_toggle(true); // Enables modifying the controller curve with buttons on the joysticks
-  chassis.opcontrol_drive_activebrake_set(0); // Sets the active brake kP. We recommend 0.1.
+  chassis.opcontrol_drive_activebrake_set(0.1); // Sets the active brake kP. We recommend 0.1.
   chassis.opcontrol_curve_default_set(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)  
   default_constants(); // Set the drive to your own constants from autons.cpp!
 
@@ -139,7 +140,6 @@ void competition_initialize() {
 }
 
 void autonomous() {
-  Near_Auton();
   chassis.pid_targets_reset(); 
   chassis.drive_imu_reset(); 
   chassis.drive_sensor_reset(); 
@@ -148,12 +148,11 @@ void autonomous() {
 }
 
 void opcontrol() {
-  // autonomous();
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
   Arm.set_brake_mode(MOTOR_BRAKE_HOLD); 
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
-  // pros::Task Control_Arm(Arm_Control);
-  // pros::Task Control_FlyWheel(FlyWheel_Control);
+  pros::Task Control_Arm(Arm_Control);
+  pros::Task Control_FlyWheel(FlyWheel_Control);
   while (true) {
 
     
@@ -161,16 +160,16 @@ void opcontrol() {
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     if (!pros::competition::is_connected()) { 
       // Enable / Disable PID Tuner
-      if (master.get_digital_new_press(DIGITAL_X)) 
+      if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) 
         chassis.pid_tuner_toggle();
         
-      // Trigger the selected autonomous routine
-      if (master.get_digital_new_press(DIGITAL_B)) 
-        autonomous();
+      // Trigger the selected autonomous routine 
+      if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) 
+        Near_Auton();
 
       chassis.pid_tuner_iterate(); // Allow PID Tuner to iterate
     } 
-
+    
 
     chassis.opcontrol_arcade_standard(ez::SPLIT);
     pros::delay(ez::util::DELAY_TIME);

@@ -3,6 +3,7 @@
 
 extern Drive chassis;
 
+void drive_example();
 void Near_Auton();
 void Far_Auton();
 void Skills_Auton();
