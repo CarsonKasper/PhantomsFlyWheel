@@ -59,7 +59,7 @@ void drive_example() {
   chassis.pid_wait();
 }
 
-void Near_Auton(){
+void Far_Auton(){
   //chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
   LeftWing.set_value(true);
   chassis.drive_set(70, 70); // forward
@@ -68,28 +68,82 @@ void Near_Auton(){
   pros::delay(200);
   chassis.drive_set(-100, 100); // left
   pros::delay(150);
-  LeftWing.set_value(false);
   stupid_break();
-  pros::delay(500);
-  chassis.drive_set(100, 100); // forward
-  pros::delay(600);
+  pros::delay(200);
+  LeftWing.set_value(false);
+  chassis.drive_set(100, 110); // forward
+  pros::delay(800);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(-100, -100); // backward
+  pros::delay(100);
+  stupid_break();
+  chassis.drive_set(100,100); // forward
+  pros::delay(100);
   stupid_break();
   chassis.drive_set(-100, -100); // backward
-  pros::delay(80);
+  pros::delay(140);
   stupid_break();
+  pros::delay(200);
   chassis.drive_set(-100, 100); // left
-  pros::delay(285);
+  pros::delay(305);
   stupid_break();
-  chassis.drive_set(100, 100); // forward
-  pros::delay(600);
+  pros::delay(200);
+  chassis.drive_set(105, 100); // forward
+  pros::delay(1300);
   stupid_break();
-  chassis.drive_set(0, 0);
+  pros::delay(500);
+  chassis.drive_set(-100, -100); // backward
+  pros::delay(100);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(100, -100); // right
+  pros::delay(300);
+  RightWing.set_value(true);
+  stupid_break();
+  pros::delay(200);
   chassis.drive_set(100, 100); // forward
+  pros::delay(200);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(100, -100); // right
+  pros::delay(200);
+  stupid_break();
+  pros::delay(200);
+  RightWing.set_value(false);
+  chassis.drive_set(100, 100); // forward
+  pros::delay(250);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(-100, 100); // left
+  pros::delay(200);
+  stupid_break();
+  Arm.move(100);
   pros::delay(600);
-  chassis.drive_set(0, 0);
-    chassis.drive_set(100, -100); // left
-  pros::delay(150);
-  chassis.drive_set(0, 0);
+  chassis.drive_set(100, 100); // forward
+  pros::delay(200);
+  Arm.move(-100);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(-100, 100); // left
+  pros::delay(350);
+  Arm.move(0);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(-100, -100); // backward
+  pros::delay(100);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(-100, 100); // left
+  pros::delay(230);
+  RightWing.set_value(true);
+  LeftWing.set_value(true);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(100, 100); // forward
+  pros::delay(1000);
+  stupid_break();
+  pros::delay(200);
 
 
   // chassis.drive_imu_reset(); 
@@ -99,11 +153,40 @@ void Near_Auton(){
   // chassis.pid_wait();
 }
  
-void Far_Auton(){
-  chassis.pid_turn_set(90, 110, false);
-  //chassis.set_drive_pid();
-  chassis.pid_wait();
-}
+void Near_Auton(){
+  RightWing.set_value(true);
+  chassis.drive_set(70, 70); // forward
+  pros::delay(300);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(100, -100); // right
+  pros::delay(150);
+  stupid_break();
+  pros::delay(200);
+  RightWing.set_value(false);
+  chassis.drive_set(100, 110); // forward
+  pros::delay(800);
+  stupid_break();
+  pros::delay(200);
+   chassis.drive_set(-100, -100); // backward
+  pros::delay(100);
+  stupid_break();
+  chassis.drive_set(100,100); // forward
+  pros::delay(100);
+  stupid_break();
+  chassis.drive_set(-100, -100); // backward
+  pros::delay(140);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(100, -100); // right
+  pros::delay(305);
+  stupid_break();
+  pros::delay(200);
+  chassis.drive_set(115, 110); // forward
+  pros::delay(1300);
+  stupid_break();
+  RightWing.set_value(true);
+  }
 
 void Skills_Auton(){
 

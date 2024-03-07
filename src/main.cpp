@@ -148,6 +148,8 @@ void autonomous() {
 }
 
 void opcontrol() {
+  LeftWing.set_value(false);
+  RightWing.set_value(false);
   chassis.drive_brake_set(MOTOR_BRAKE_COAST);
   Arm.set_brake_mode(MOTOR_BRAKE_HOLD); 
   FlyWheel.set_brake_mode(MOTOR_BRAKE_COAST);
