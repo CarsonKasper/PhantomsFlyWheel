@@ -18,6 +18,7 @@ void Arm_Control() {
     while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       Arm.move(-127);
     }
+    /*
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
       chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
       chassis.drive_set(30, 30);
@@ -34,12 +35,13 @@ void Arm_Control() {
       chassis.drive_brake_set(MOTOR_BRAKE_COAST);
       PTOPiston.set_value(false);
     }
+    */
     Arm.brake();
   }
 }
 
 void BangBangLoop() {
-  int BangInputRPM = 280;
+  int BangInputRPM = 150;
   if (FlyWheel.get_actual_velocity() > BangInputRPM)
     {
       FlyWheel.move_voltage(5000);
@@ -103,7 +105,7 @@ void Wing_Control() {
         i = 1;
       }
     }
-    pros::delay(130);
+    pros::delay(300);
   }
 }
 
@@ -118,7 +120,7 @@ void initialize() {
 
   ez::as::auton_selector.autons_add({
     //Auton("Skills Auton", Skills_Auton),
-    Auton("Near Auton", Near_Auton),
+    //Auton("Near Auton", Near_Auton),
     Auton("Far Auton", Far_Auton),
     Auton("Skills Auton", Skills_Auton),
   });
@@ -129,6 +131,7 @@ void initialize() {
   pros::Task Control_Arm(Arm_Control);
   pros::Task Control_FlyWheel(FlyWheel_Control);
   pros::Task Control_Wings(Wing_Control);
+  PTOPiston.set_value(false);
 }
 
 void disabled() {
@@ -157,7 +160,7 @@ void opcontrol() {
   pros::Task Control_FlyWheel(FlyWheel_Control);
   while (true) {
 
-    
+    /*
     // PID Tuner
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     if (!pros::competition::is_connected()) { 
@@ -167,11 +170,11 @@ void opcontrol() {
         
       // Trigger the selected autonomous routine 
       if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) 
-        Near_Auton();
+        Far_Auton();
 
       chassis.pid_tuner_iterate(); // Allow PID Tuner to iterate
     } 
-    
+    */
 
     chassis.opcontrol_arcade_standard(ez::SPLIT);
     pros::delay(ez::util::DELAY_TIME);

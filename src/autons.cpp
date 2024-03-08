@@ -62,6 +62,7 @@ void drive_example() {
 void Far_Auton(){
   //chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
   LeftWing.set_value(true);
+  pros::delay(200);
   chassis.drive_set(70, 70); // forward
   pros::delay(300);
   stupid_break();
@@ -81,24 +82,38 @@ void Far_Auton(){
   chassis.drive_set(100,100); // forward
   pros::delay(100);
   stupid_break();
-  chassis.drive_set(-100, -100); // backward
-  pros::delay(140);
+  chassis.drive_set(-80, -80); // backward
+  pros::delay(150);
   stupid_break();
   pros::delay(200);
-  chassis.drive_set(-100, 100); // left
-  pros::delay(305);
+  chassis.drive_set(-80, 80); // left
+  pros::delay(425);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(65,65);
+  pros::delay(1500);
+  chassis.drive_set(65, 10);
+  RightWing.set_value(true);
+  pros::delay(900);
+  stupid_break();
+  /*
+  pros::delay(350);
   stupid_break();
   pros::delay(200);
-  chassis.drive_set(105, 100); // forward
-  pros::delay(1300);
+  chassis.drive_set(-100, -100); // backwards
+  pros::delay(500);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(80, 80); // forward
+  pros::delay(1600);
   stupid_break();
   pros::delay(500);
-  chassis.drive_set(-100, -100); // backward
-  pros::delay(100);
+  chassis.drive_set(-80, -80); // backward
+  pros::delay(130);
   stupid_break();
   pros::delay(200);
-  chassis.drive_set(100, -100); // right
-  pros::delay(300);
+  chassis.drive_set(127, -127); // right
+  pros::delay(500);
   RightWing.set_value(true);
   stupid_break();
   pros::delay(200);
@@ -144,7 +159,7 @@ void Far_Auton(){
   pros::delay(1000);
   stupid_break();
   pros::delay(200);
-
+*/
 
   // chassis.drive_imu_reset(); 
   // chassis.drive_sensor_reset();
