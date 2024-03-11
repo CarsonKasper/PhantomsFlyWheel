@@ -83,18 +83,19 @@ void Far_Auton(){
   pros::delay(100);
   stupid_break();
   chassis.drive_set(-80, -80); // backward
-  pros::delay(150);
-  stupid_break();
   pros::delay(200);
+  stupid_break();
+  pros::delay(100);
   chassis.drive_set(-80, 80); // left
-  pros::delay(425);
+  pros::delay(440);
   stupid_break();
   pros::delay(100);
   chassis.drive_set(65,65);
   pros::delay(1500);
-  chassis.drive_set(65, 10);
   RightWing.set_value(true);
-  pros::delay(900);
+  pros::delay(200);
+  chassis.drive_set(65, -65);
+  pros::delay(150);
   stupid_break();
   /*
   pros::delay(350);
@@ -169,13 +170,14 @@ void Far_Auton(){
 }
  
 void Near_Auton(){
-  RightWing.set_value(true);
+  //RightWing.set_value(true);
+  pros::delay(200);
   chassis.drive_set(70, 70); // forward
   pros::delay(300);
   stupid_break();
   pros::delay(200);
-  chassis.drive_set(100, -100); // right
-  pros::delay(150);
+  chassis.drive_set(110, -100); // right
+  pros::delay(200);
   stupid_break();
   pros::delay(200);
   RightWing.set_value(false);
@@ -190,20 +192,70 @@ void Near_Auton(){
   pros::delay(100);
   stupid_break();
   chassis.drive_set(-100, -100); // backward
-  pros::delay(140);
+  pros::delay(210);
   stupid_break();
   pros::delay(200);
-  chassis.drive_set(100, -100); // right
-  pros::delay(305);
+  chassis.drive_set(80, -80); // right
+  pros::delay(450);
   stupid_break();
   pros::delay(200);
   chassis.drive_set(115, 110); // forward
-  pros::delay(1300);
+  pros::delay(1100);
   stupid_break();
-  RightWing.set_value(true);
+  pros::delay(100);
+  chassis.drive_set(-80, 80);
+  pros::delay(300);
+  LeftWing.set_value(true);
+  stupid_break();
   }
 
 void Skills_Auton(){
+  chassis.drive_set(5, 5);
+  pros::delay(45000);
+  //pros::delay(1000);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(-80, -80);
+  pros::delay(200);
+  stupid_break();
+  delay(100);
+  chassis.drive_set(80, -80);
+  pros::delay(700);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(80, 80);
+  pros::delay(1600);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(80, -80);
+  pros::delay(350);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(-80, -80);
+  pros::delay(200);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(127, 127);
+  pros::delay(1000);
+  LeftWing.set_value(true);
+  RightWing.set_value(true);
+  pros::delay(3000);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(-80, -80);
+  stupid_break();
+  pros::delay(1500);
+  chassis.drive_set(127, 127);
+  pros::delay(1000);
+  stupid_break();
+  pros::delay(100);
+  chassis.drive_set(-127, -127);
+  pros::delay(600);
+  stupid_break();
+
+
+
+
 
 
 

@@ -6,11 +6,10 @@ pros::ADIDigitalOut PTOPiston('C');
 pros::ADIDigitalOut LeftWing('A');
 pros::ADIDigitalOut RightWing('B');
 
-Drive chassis ({-5, -10, -9}, {6, 7, 8}, 11, 4.125, 600, /*0.57142857142 */1.75);
+Drive chassis ({-5, -19, -9}, {6, 7, 8}, 11, 4.125, 600, /*0.57142857142 */1.75);
 
 void Arm_Control() {
   while (true) {
-
     pros::delay(10);
     while (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
     Arm.move(127);
@@ -54,7 +53,7 @@ void BangBangLoop() {
 }
 
 void FlyWheel_Control() {
-  int i = 1;
+  int i = 0;
   while (true) {
     pros::delay(200);
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
@@ -73,7 +72,7 @@ void FlyWheel_Control() {
 }
 
 void Wing_Control() {
-  int i = 0;
+  int i = 1;
   while (true)
   {
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
@@ -87,7 +86,7 @@ void Wing_Control() {
         i = 1;
       }
     }
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
       if (i == 1) {
         LeftWing.set_value(false);
         i = 0;
@@ -96,8 +95,8 @@ void Wing_Control() {
         i = 1;
       }
     }
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-      if (i == 1) {
+    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
+      if (i == 0) {
         RightWing.set_value(false);
         i = 0;
       } else {
@@ -120,9 +119,10 @@ void initialize() {
 
   ez::as::auton_selector.autons_add({
     //Auton("Skills Auton", Skills_Auton),
-    //Auton("Near Auton", Near_Auton),
+    Auton("Near Auton", Near_Auton),
     Auton("Far Auton", Far_Auton),
     Auton("Skills Auton", Skills_Auton),
+     
   });
 
   chassis.initialize();
@@ -165,7 +165,7 @@ void opcontrol() {
     // After you find values that you're happy with, you'll have to set them in auton.cpp
     if (!pros::competition::is_connected()) { 
       // Enable / Disable PID Tuner
-      if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_X)) 
+      if (master.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) 
         chassis.pid_tuner_toggle();
         
       // Trigger the selected autonomous routine 
